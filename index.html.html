@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lassa Tyre Warranty Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      background: #111;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* Tyre tread SVG overlay, inspired by image1 */
+    .tread-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .tread-svg {
+      height: 100vh;
+      width: 280px;
+      min-width: 240px;
+      max-width: 90vw;
+      display: block;
+      opacity: 0.22;
+    }
+    .container {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+      padding: 2em;
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+    h2 {
+      text-align: center;
+      color: #c62828;
+      margin-top: 0;
+    }
+    label, input {
+      display: block;
+      margin: 0.5em 0;
+    }
+    label {
+      color: #1565c0;
+      font-weight: 500;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 0.5em;
+      border: 1px solid #2196f3;
+      border-radius: 4px;
+      margin-bottom: 1em;
+      font-size: 1em;
+      background: #e3f2fd;
+    }
+    button {
+      width: 100%;
+      padding: 0.75em;
+      background: #1565c0;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #1976d2;
+    }
+    .result {
+      margin-top: 1.5em;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #1565c0;
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      .tread-svg {
+        width: 120px;
+        min-width: 80px;
+      }
+      .container {
+        padding: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Tyre tread SVG overlay, inspired by image1 -->
+  <div class="tread-bg">
+    <svg class="tread-svg" viewBox="0 0 200 768" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="200" height="768" fill="#c62828"/>
+      <g stroke="#111" stroke-width="7">
+        <!-- Middle chevron pattern -->
+        <path d="M60 0 Q100 48 140 0" />
+        <path d="M60 48 Q100 96 140 48" />
+        <path d="M60 96 Q100 144 140 96" />
+        <path d="M60 144 Q100 192 140 144" />
+        <path d="M60 192 Q100 240 140 192" />
+        <path d="M60 240 Q100 288 140 240" />
+        <path d="M60 288 Q100 336 140 288" />
+        <path d="M60 336 Q100 384 140 336" />
+        <path d="M60 384 Q100 432 140 384" />
+        <path d="M60 432 Q100 480 140 432" />
+        <path d="M60 480 Q100 528 140 480" />
+        <path d="M60 528 Q100 576 140 528" />
+        <path d="M60 576 Q100 624 140 576" />
+        <path d="M60 624 Q100 672 140 624" />
+        <path d="M60 672 Q100 720 140 672" />
+        <path d="M60 720 Q100 768 140 720" />
+        <!-- Vertical lines -->
+        <line x1="100" y1="0" x2="100" y2="768"/>
+        <line x1="50" y1="0" x2="50" y2="768"/>
+        <line x1="150" y1="0" x2="150" y2="768"/>
+        <!-- Side blocks, left -->
+        <path d="M0 0 H40 V48 H0" />
+        <path d="M0 48 H40 V96 H0" />
+        <path d="M0 96 H40 V144 H0" />
+        <path d="M0 144 H40 V192 H0" />
+        <path d="M0 192 H40 V240 H0" />
+        <path d="M0 240 H40 V288 H0" />
+        <path d="M0 288 H40 V336 H0" />
+        <path d="M0 336 H40 V384 H0" />
+        <path d="M0 384 H40 V432 H0" />
+        <path d="M0 432 H40 V480 H0" />
+        <path d="M0 480 H40 V528 H0" />
+        <path d="M0 528 H40 V576 H0" />
+        <path d="M0 576 H40 V624 H0" />
+        <path d="M0 624 H40 V672 H0" />
+        <path d="M0 672 H40 V720 H0" />
+        <path d="M0 720 H40 V768 H0" />
+        <!-- Side blocks, right -->
+        <path d="M160 0 H200 V48 H160" />
+        <path d="M160 48 H200 V96 H160" />
+        <path d="M160 96 H200 V144 H160" />
+        <path d="M160 144 H200 V192 H160" />
+        <path d="M160 192 H200 V240 H160" />
+        <path d="M160 240 H200 V288 H160" />
+        <path d="M160 288 H200 V336 H160" />
+        <path d="M160 336 H200 V384 H160" />
+        <path d="M160 384 H200 V432 H160" />
+        <path d="M160 432 H200 V480 H160" />
+        <path d="M160 480 H200 V528 H160" />
+        <path d="M160 528 H200 V576 H160" />
+        <path d="M160 576 H200 V624 H160" />
+        <path d="M160 624 H200 V672 H160" />
+        <path d="M160 672 H200 V720 H160" />
+        <path d="M160 720 H200 V768 H160" />
+      </g>
+    </svg>
+  </div>
+  <div class="container">
+    <h2>Lassa Tyre Warranty Calculator</h2>
+    <form id="tyreForm" onsubmit="event.preventDefault(); calculateWarranty();">
+      <label>
+        Tyre Price (£):
+        <input type="number" id="price" min="0" step="0.01" required>
+      </label>
+      <label>
+        Remaining Tread Depth (mm):
+        <input type="number" id="currentTread" min="0" step="0.1" required>
+      </label>
+      <!-- Hidden fields for original and minimum tread depth -->
+      <input type="hidden" id="originalTread" value="8">
+      <input type="hidden" id="minTread" value="1.6">
+      <button type="submit">Calculate</button>
+    </form>
+    <div class="result" id="result"></div>
+  </div>
+  <script>
+    function calculateWarranty() {
+      var price = parseFloat(document.getElementById('price').value);
+      var originalTread = parseFloat(document.getElementById('originalTread').value);
+      var currentTread = parseFloat(document.getElementById('currentTread').value);
+      var minTread = parseFloat(document.getElementById('minTread').value);
+
+      var usableTread = originalTread - minTread;
+      var treadWorn = originalTread - currentTread;
+      var percentWorn = treadWorn / usableTread;
+      percentWorn = Math.max(0, Math.min(1, percentWorn)); // Clamp between 0 and 1
+      var amountToPay = price * percentWorn;
+
+      document.getElementById('result').textContent =
+        'Customer pays: £' + amountToPay.toFixed(2) +
+        ' (' + (percentWorn * 100).toFixed(1) + '% of tyre price)';
+    }
+  </script>
+</body>
+</html>
